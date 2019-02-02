@@ -28,18 +28,22 @@ public class GenerateTerrain : MonoBehaviour {
             //Borders and ramps
             GameObject generatedLeftBorder = GameObject.Instantiate(leftBorder, new Vector3(-borderGenerationRange, 40 + (16 * generateID), 0), Quaternion.identity);
             GameObject generatedRightBorder = GameObject.Instantiate(rightBorder, new Vector3(borderGenerationRange, 40 + (16 * generateID), 0), Quaternion.identity);
-            GameObject generatedRamp = GameObject.Instantiate(ramp, new Vector3(Random.Range(-borderGenerationRange + 0.5f, borderGenerationRange - 0.5f), 24 + (16 * generateID), 0), Quaternion.identity);
-            GameObject generatedRamp2 = GameObject.Instantiate(ramp, new Vector3(Random.Range(-borderGenerationRange + 0.5f, borderGenerationRange - 0.5f), 32 + (16 * generateID), 0), Quaternion.identity);
             GameObject generatedLeftBorderRamp = GameObject.Instantiate(ramp, generatedLeftBorder.transform.position + new Vector3(0, Random.Range(-4,4), 0), Quaternion.identity, generatedLeftBorder.transform);
             GameObject generatedRightBorderRamp = GameObject.Instantiate(ramp, generatedRightBorder.transform.position + new Vector3(0, Random.Range(-4, 4), 0), Quaternion.identity, generatedRightBorder.transform);
             //Obstacles
-            if (generateID % 4 == 0)
+            if (generateID % 8 == 1 || generateID % 8 == 6)
             {
                 GameObject generatedStickwheel = GameObject.Instantiate(stickwheel, new Vector3(Random.Range(-borderGenerationRange + 0.5f, borderGenerationRange - 0.5f), 34 + (6 * generateID), 0), Quaternion.identity);
             }
-            if(generateID % 8 == 0)
+            else if(generateID % 8 == 4)
             {
                 GameObject generatedSpikes = GameObject.Instantiate(spikes, new Vector3(Random.Range(-borderGenerationRange, borderGenerationRange), 150 + (8 * generateID), 0), Quaternion.identity);
+            }
+            else
+            {
+                GameObject generatedRamp = GameObject.Instantiate(ramp, new Vector3(Random.Range(-borderGenerationRange + 0.5f, borderGenerationRange - 0.5f), 24 + (16 * generateID), 0), Quaternion.identity);
+                GameObject generatedRamp2 = GameObject.Instantiate(ramp, new Vector3(Random.Range(-borderGenerationRange + 0.5f, borderGenerationRange - 0.5f), 32 + (16 * generateID), 0), Quaternion.identity);
+
             }
             generateID++;
         }

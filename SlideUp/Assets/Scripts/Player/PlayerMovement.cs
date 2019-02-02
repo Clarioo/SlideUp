@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour {
     //UI
     public GameObject shootArrow;
     public GameObject viewFinder;
+    public SpriteRenderer viewFinderArrow;
 	// Use this for initialization
 	void Start () {
         rigidbodyMove = GetComponent<Rigidbody2D>();
@@ -43,26 +44,19 @@ public class PlayerMovement : MonoBehaviour {
             {
 
                 Touch moveTouch = Input.GetTouch(0); 
-                foreach (Transform child in viewFinder.transform) // Destroying last viewFinder
-                {
-                    Destroy(child.gameObject);
-                }
                 //Getting Touch Swipe
                 if (moveTouch.phase == TouchPhase.Began)
                 {
                     startPoint = moveTouch.position;
                 }
-                dragVector = moveTouch.position - startPoint;//getting current swipe Vector
-                // GenerateViewFinder(dragVector);// Function to Fix
+                dragVector = (moveTouch.position - startPoint) * 20f /Screen.height;//getting current swipe Vector
+                GenerateViewFinder(dragVector);// Function to Fix
                 if (moveTouch.phase == TouchPhase.Ended)
                 {
                     endPoint = moveTouch.position;
-                    rigidbodyMove.velocity = (startPoint - endPoint) * 0.03f;
-                    foreach(Transform child in viewFinder.transform)
-                    {
-                        Destroy(child.gameObject);
-                    }
+                    rigidbodyMove.velocity = (startPoint - endPoint)/Screen.height*35f; // speed = swipe vector/resolution*constance_multiplier
                     viewFinder.transform.rotation = Quaternion.identity;
+                    viewFinderArrow.enabled = false;
                 }
                 
             }
@@ -89,12 +83,9 @@ public class PlayerMovement : MonoBehaviour {
    
     void GenerateViewFinder(Vector3 jumpVector) //To fix
     {
-        int shootRange = (int)jumpVector.magnitude / 100;
-        for (int arrowID = 0; arrowID < shootRange; arrowID++)
-        {
-            GameObject arrow = GameObject.Instantiate(shootArrow, viewFinder.transform);
-            arrow.transform.position = transform.position + new Vector3(0, arrowID, 0);
-        }
+        viewFinderArrow.enabled = true;
+        float shootRange = jumpVector.magnitude;
+        viewFinder.transform.localScale = new Vector3(10, shootRange, 1);
         Vector3 vectorToTarget = jumpVector - transform.position;
         float angle = Mathf.Atan2(vectorToTarget.x, -vectorToTarget.y) * Mathf.Rad2Deg;
         viewFinder.transform.rotation = Quaternion.Euler(0, 0, angle);
