@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
     //Basic variables
+    Vector2 movementSpeed;
+    float collisionReductor = 1;
     public bool isAlive;
     bool isGrounded;
     
@@ -35,6 +37,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Jump();
+        
 	}
     void Jump()
     {
@@ -49,12 +52,17 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     startPoint = moveTouch.position;
                 }
-                dragVector = (moveTouch.position - startPoint) * 20f /Screen.height;//getting current swipe Vector
-                GenerateViewFinder(dragVector);// Function to Fix
+                dragVector = (moveTouch.position - startPoint) * 16f /Screen.height;//getting current swipe Vector
+                GenerateViewFinder(dragVector);
                 if (moveTouch.phase == TouchPhase.Ended)
                 {
                     endPoint = moveTouch.position;
-                    rigidbodyMove.velocity = (startPoint - endPoint)/Screen.height*35f; // speed = swipe vector/resolution*constance_multiplier
+                    movementSpeed = (startPoint - endPoint) / Screen.height * 30f;// speed = swipe vector/resolution*constance_multiplier
+                    Debug.Log(movementSpeed.magnitude);
+                    if (movementSpeed.magnitude > 16)
+                        rigidbodyMove.velocity = movementSpeed * (16/movementSpeed.magnitude);
+                    else
+                        rigidbodyMove.velocity = movementSpeed;
                     viewFinder.transform.rotation = Quaternion.identity;
                     viewFinderArrow.enabled = false;
                 }
@@ -68,26 +76,55 @@ public class PlayerMovement : MonoBehaviour {
                 sprRenderer.flipY = false;
         }
     }
+
+   
+
+    public bool IsPlayerOnSecureDistance(int currentMaxGenerateHeight)
+    {
+        if (currentMaxGenerateHeight < gameObject.transform.position.y)
+            return true;
+        else
+            return false;
+    }
     public void Die()
     {
+        //Finding objects
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         eventHandler = GameObject.FindGameObjectWithTag("EventHandler");
+
+        //Get objects Components
         CameraFollow camFollow = mainCamera.GetComponent<CameraFollow>();
         GameUIController gameUIControl = eventHandler.GetComponent<GameUIController>();
+        CoinSystem coinSystem = eventHandler.GetComponent<CoinSystem>();
+        CollectingSystem collectingSystem = GetComponent<CollectingSystem>();
+        GenerateTerrain generateTerrain = eventHandler.GetComponent<GenerateTerrain>();
+
+        //Set Variables
         camFollow.isGameStarted = false;
-        gameUIControl.SaveScore();
+        //Save score and Collected Coins
+        coinSystem.SaveCoins(collectingSystem.collectedCoins);
+        switch (generateTerrain.gameMode)
+        {
+            case "DeathRun":
+                gameUIControl.SaveDeathRunScore();
+                break;
+            case "TimeTrial":
+                gameUIControl.SaveTimeTrialScore();
+                break;
+
+        }
 
         Destroy(this.gameObject);
         
     }
    
-    void GenerateViewFinder(Vector3 jumpVector) //To fix
+    void GenerateViewFinder(Vector3 jumpVector)
     {
         viewFinderArrow.enabled = true;
         float shootRange = jumpVector.magnitude;
         viewFinder.transform.localScale = new Vector3(10, shootRange, 1);
         Vector3 vectorToTarget = jumpVector - transform.position;
-        float angle = Mathf.Atan2(vectorToTarget.x, -vectorToTarget.y) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(jumpVector.x, -jumpVector.y) * Mathf.Rad2Deg;
         viewFinder.transform.rotation = Quaternion.Euler(0, 0, angle);
 
     }
@@ -115,6 +152,25 @@ public class PlayerMovement : MonoBehaviour {
         {
             Die();
         }
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+
+        }
+        if (collision.gameObject.CompareTag("Border"))
+        {
+            //StartCoroutine(DecreaseMovementOnCollision());
+        }
+    }
+    IEnumerator DecreaseMovementOnCollision()
+    {
+        collisionReductor = 0.1f;
+        for(int decreaseTime = 0; decreaseTime<5; decreaseTime++)
+        {
+            collisionReductor *= 2;
+            rigidbodyMove.velocity = rigidbodyMove.velocity * new Vector2(collisionReductor, collisionReductor);
+            yield return new WaitForSeconds(0.2f);
+        }
+        collisionReductor = 1;
     }
 
 }

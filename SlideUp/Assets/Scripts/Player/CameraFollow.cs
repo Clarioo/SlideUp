@@ -25,7 +25,7 @@ public class CameraFollow : MonoBehaviour {
 		if (target & playerMovement != null && playerMovement.isAlive && target.position.y > maxHeight) //Centre Camera on Player
 		{
             transform.position = new Vector3(0, transform.position.y, transform.position.z);
-			transform.position = Vector3.Lerp(transform.position, target.position, 0.1f) + new Vector3(0,0.6f,-10); // Second Vector is Camera offset
+			transform.position = Vector3.Lerp(transform.position, new Vector3(0, target.position.y-2, 0), 0.1f) + new Vector3(0,0.5f,-10f); // Second Vector is Camera offset
             maxHeight = target.position.y; //Locking camera on highest score in current game
 		}
 	}

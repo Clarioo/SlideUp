@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 95671709587157626}
   - component: {fileID: 61851631664874272}
   - component: {fileID: 114566919790049362}
+  - component: {fileID: 114540545172195490}
   m_Layer: 8
   m_Name: Character1
   m_TagString: Player
@@ -244,6 +245,18 @@ MonoBehaviour:
   shootArrow: {fileID: 1958022231020572}
   viewFinder: {fileID: 1898429910655944}
   viewFinderArrow: {fileID: 212527949012317372}
+--- !u!114 &114540545172195490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657952320254268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0887eab0c8f5d34ba3d217c900f9b57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectedCoins: 0
 --- !u!114 &114566919790049362
 MonoBehaviour:
   m_ObjectHideFlags: 1
