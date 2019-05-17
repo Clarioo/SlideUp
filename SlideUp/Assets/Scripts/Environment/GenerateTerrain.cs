@@ -22,7 +22,8 @@ public class GenerateTerrain : MonoBehaviour {
 
     //Components
     PlayerMovement playerMove;
-
+    PlayerState playerState;
+    GameState gameState; 
 
 
     // Use this for initialization
@@ -59,8 +60,9 @@ public class GenerateTerrain : MonoBehaviour {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
+                playerState = player.GetComponent<PlayerState>();
                 playerMove = player.GetComponent<PlayerMovement>();
-                if (playerMove.IsPlayerOnSecureDistance(currentMaxBuildHeight - generatingSecureDistance))//Checking that player went up after last building
+                if (playerState.IsPlayerOnSecureDistance(currentMaxBuildHeight - generatingSecureDistance))//Checking that player went up after last building
                 {
                     //Borders and ramps
                     GameObject generatedLeftBorder = GameObject.Instantiate(leftBorder, new Vector3(-borderGenerationRange, generationStartPosY + (16 * generateID), 0), Quaternion.identity, currentMap.transform);

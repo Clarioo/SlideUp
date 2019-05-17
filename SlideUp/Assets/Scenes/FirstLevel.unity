@@ -6407,7 +6407,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1830426516}
-        m_MethodName: OpenCloseSettings
+        m_MethodName: OpenClosePanels
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7038,23 +7038,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4183406091431692, guid: 0bf6e29ef4f41c947b5ab17636dcc39a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 22.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 4043723441641138, guid: 0bf6e29ef4f41c947b5ab17636dcc39a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 29.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 4286585255552572, guid: 0bf6e29ef4f41c947b5ab17636dcc39a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 34.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 61700067427413656, guid: 0bf6e29ef4f41c947b5ab17636dcc39a,
-        type: 2}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 601e6f916481f4e468cf007fd4b21707, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0bf6e29ef4f41c947b5ab17636dcc39a, type: 2}
   m_IsPrefabParent: 0
@@ -8418,7 +8401,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1830426516}
-        m_MethodName: OpenCloseSettings
+        m_MethodName: OpenClosePanels
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

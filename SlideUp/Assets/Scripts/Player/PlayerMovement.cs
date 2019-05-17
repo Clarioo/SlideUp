@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour {
     //Basic variables
     Vector2 movementSpeed;
     float collisionReductor = 1;
+    float resolutionScaler = 20;
     public bool isAlive;
     bool isGrounded;
     
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
     Vector2 startPoint, endPoint;
 
     //Components
+    public MovementUIController movementUIController;
     Rigidbody2D rigidbodyMove;
     public SpriteRenderer sprRenderer;
     Animator anim;
@@ -52,15 +54,15 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     startPoint = moveTouch.position;
                 }
-                dragVector = (moveTouch.position - startPoint) * 16f /Screen.height;//getting current swipe Vector
-                GenerateViewFinder(dragVector);
+                dragVector = (moveTouch.position - startPoint) * resolutionScaler /Screen.height;//getting current swipe Vector
+                movementUIController.GenerateViewFinder(dragVector);
                 if (moveTouch.phase == TouchPhase.Ended)
                 {
                     endPoint = moveTouch.position;
-                    movementSpeed = (startPoint - endPoint) / Screen.height * 30f;// speed = swipe vector/resolution*constance_multiplier
+                    movementSpeed = (startPoint - endPoint) / Screen.height * 40f;// speed = swipe vector/resolution*constance_multiplier
                     Debug.Log(movementSpeed.magnitude);
-                    if (movementSpeed.magnitude > 16)
-                        rigidbodyMove.velocity = movementSpeed * (16/movementSpeed.magnitude);
+                    if (movementSpeed.magnitude > resolutionScaler)
+                        rigidbodyMove.velocity = movementSpeed * (resolutionScaler/movementSpeed.magnitude);
                     else
                         rigidbodyMove.velocity = movementSpeed;
                     viewFinder.transform.rotation = Quaternion.identity;
@@ -77,15 +79,6 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-   
-
-    public bool IsPlayerOnSecureDistance(int currentMaxGenerateHeight)
-    {
-        if (currentMaxGenerateHeight < gameObject.transform.position.y)
-            return true;
-        else
-            return false;
-    }
     public void Die()
     {
         //Finding objects
@@ -93,14 +86,14 @@ public class PlayerMovement : MonoBehaviour {
         eventHandler = GameObject.FindGameObjectWithTag("EventHandler");
 
         //Get objects Components
-        CameraFollow camFollow = mainCamera.GetComponent<CameraFollow>();
+        GameState gameState = eventHandler.GetComponent<GameState>();
         GameUIController gameUIControl = eventHandler.GetComponent<GameUIController>();
         CoinSystem coinSystem = eventHandler.GetComponent<CoinSystem>();
         CollectingSystem collectingSystem = GetComponent<CollectingSystem>();
         GenerateTerrain generateTerrain = eventHandler.GetComponent<GenerateTerrain>();
 
         //Set Variables
-        camFollow.isGameStarted = false;
+        gameState.isGameStarted = false;
         //Save score and Collected Coins
         coinSystem.SaveCoins(collectingSystem.collectedCoins);
         switch (generateTerrain.gameMode)
@@ -117,17 +110,12 @@ public class PlayerMovement : MonoBehaviour {
         Destroy(this.gameObject);
         
     }
-   
-    void GenerateViewFinder(Vector3 jumpVector)
+    void SaveScoreOnCurrentMode()
     {
-        viewFinderArrow.enabled = true;
-        float shootRange = jumpVector.magnitude;
-        viewFinder.transform.localScale = new Vector3(10, shootRange, 1);
-        Vector3 vectorToTarget = jumpVector - transform.position;
-        float angle = Mathf.Atan2(jumpVector.x, -jumpVector.y) * Mathf.Rad2Deg;
-        viewFinder.transform.rotation = Quaternion.Euler(0, 0, angle);
 
     }
+   
+    
     private void OnCollisionStay2D(Collision2D collision) 
     {
         isGrounded = true;
@@ -158,19 +146,20 @@ public class PlayerMovement : MonoBehaviour {
         }
         if (collision.gameObject.CompareTag("Border"))
         {
-            //StartCoroutine(DecreaseMovementOnCollision());
+            BoxCollider2D boxCollider = collision.gameObject.GetComponent<BoxCollider2D>();
+            StartCoroutine(DecreaseMovementOnCollision(boxCollider.friction));
         }
     }
-    IEnumerator DecreaseMovementOnCollision()
+    IEnumerator DecreaseMovementOnCollision(float friction)
     {
-        collisionReductor = 0.1f;
-        for(int decreaseTime = 0; decreaseTime<5; decreaseTime++)
+        rigidbodyMove.gravityScale = 5.1f - 4*friction;
+        collisionReductor = friction/10;
+        for(int decreaseTime = 0; decreaseTime<2*friction; decreaseTime++)
         {
-            collisionReductor *= 2;
-            rigidbodyMove.velocity = rigidbodyMove.velocity * new Vector2(collisionReductor, collisionReductor);
+            rigidbodyMove.gravityScale += collisionReductor;
             yield return new WaitForSeconds(0.2f);
         }
-        collisionReductor = 1;
+        rigidbodyMove.gravityScale = 5.1f;
     }
 
 }
