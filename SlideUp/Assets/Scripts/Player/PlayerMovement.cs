@@ -17,7 +17,8 @@ public class PlayerMovement : MonoBehaviour {
     Vector2 startPoint, endPoint;
 
     //Components
-    public MovementUIController movementUIController;
+    [SerializeField] MovementUIController movementUIController;
+    [SerializeField] PlayerState playerState;
     Rigidbody2D rigidbodyMove;
     public SpriteRenderer sprRenderer;
     Animator anim;
@@ -79,37 +80,6 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    public void Die()
-    {
-        //Finding objects
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        eventHandler = GameObject.FindGameObjectWithTag("EventHandler");
-
-        //Get objects Components
-        GameState gameState = eventHandler.GetComponent<GameState>();
-        GameUIController gameUIControl = eventHandler.GetComponent<GameUIController>();
-        CoinSystem coinSystem = eventHandler.GetComponent<CoinSystem>();
-        CollectingSystem collectingSystem = GetComponent<CollectingSystem>();
-        GenerateTerrain generateTerrain = eventHandler.GetComponent<GenerateTerrain>();
-
-        //Set Variables
-        gameState.isGameStarted = false;
-        //Save score and Collected Coins
-        coinSystem.SaveCoins(collectingSystem.collectedCoins);
-        switch (generateTerrain.gameMode)
-        {
-            case "DeathRun":
-                gameUIControl.SaveDeathRunScore();
-                break;
-            case "TimeTrial":
-                gameUIControl.SaveTimeTrialScore();
-                break;
-
-        }
-
-        Destroy(this.gameObject);
-        
-    }
     void SaveScoreOnCurrentMode()
     {
 
@@ -138,7 +108,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("DeathTrigger"))
         {
-            Die();
+            playerState.Die();
         }
         if (collision.gameObject.CompareTag("Coin"))
         {
