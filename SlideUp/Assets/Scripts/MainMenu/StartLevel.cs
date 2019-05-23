@@ -11,7 +11,7 @@ public class StartLevel : MonoBehaviour {
     //UI Components
     public Image rightGate, leftGate;
     public GameObject mainMenuPanel;
-    public CameraFollow camFollow;
+    [SerializeField] GameState gameState;
     public GameUIController gameUIControl;
     public GenerateTerrain genTerrain;
 
@@ -31,8 +31,8 @@ public class StartLevel : MonoBehaviour {
 
         // Setting Basic variables
         playerMovement.isAlive = true;
-        camFollow.isGameStarted = genTerrain.isGameStarted = true;
-        camFollow.maxHeight = 3;
+        gameState.isGameStarted = genTerrain.isGameStarted = true;
+        gameState.maxHeight = 3;
         gameUIControl.scoreText.text = "0";
         gameUIControl.fireStartTime = Time.time;
         genTerrain.generateID = 0;

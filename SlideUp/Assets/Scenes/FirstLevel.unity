@@ -5306,6 +5306,8 @@ GameObject:
   - component: {fileID: 391782873}
   - component: {fileID: 391782872}
   - component: {fileID: 391782871}
+  - component: {fileID: 391782874}
+  - component: {fileID: 391782875}
   m_Layer: 5
   m_Name: Start Game Button
   m_TagString: Untagged
@@ -5402,7 +5404,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 227b354e107ad2f47848c49d9271275e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f54e7d0d2a5e8b645944b97eb42683f3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5416,6 +5418,35 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 391782869}
+--- !u!95 &391782874
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 391782869}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d58ec642dff013f4684a02a0a36a3e0f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &391782875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 391782869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554bc7adef43c484490fe43874d95231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &394605898
 GameObject:
   m_ObjectHideFlags: 0
@@ -5816,8 +5847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  isGameStarted: 0
-  maxHeight: 3
+  gameState: {fileID: 1830426518}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -8996,6 +9026,7 @@ GameObject:
   - component: {fileID: 1830426515}
   - component: {fileID: 1830426516}
   - component: {fileID: 1830426517}
+  - component: {fileID: 1830426518}
   m_Layer: 0
   m_Name: EventHandler
   m_TagString: EventHandler
@@ -9055,7 +9086,7 @@ MonoBehaviour:
   rightGate: {fileID: 1132342306}
   leftGate: {fileID: 1243359269}
   mainMenuPanel: {fileID: 1125478192}
-  camFollow: {fileID: 519420030}
+  gameState: {fileID: 1830426518}
   gameUIControl: {fileID: 1830426515}
   genTerrain: {fileID: 1830426513}
 --- !u!114 &1830426515
@@ -9123,6 +9154,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coins: 0
+--- !u!114 &1830426518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1830426511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 229d7efeacba6a642aa3a02ba8aeaa23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGameStarted: 0
+  maxHeight: 0
 --- !u!1 &1859840534
 GameObject:
   m_ObjectHideFlags: 0

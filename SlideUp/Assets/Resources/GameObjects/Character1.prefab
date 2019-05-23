@@ -26,6 +26,8 @@ GameObject:
   - component: {fileID: 61851631664874272}
   - component: {fileID: 114566919790049362}
   - component: {fileID: 114540545172195490}
+  - component: {fileID: 114494720481330888}
+  - component: {fileID: 114303034979848720}
   m_Layer: 8
   m_Name: Character1
   m_TagString: Player
@@ -229,6 +231,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657952320254268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6426a19dadc03974892a780b19f481b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementUIView: {fileID: 114494720481330888}
 --- !u!114 &114361119945615272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -241,10 +254,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAlive: 0
+  movementUIController: {fileID: 114303034979848720}
   sprRenderer: {fileID: 0}
   shootArrow: {fileID: 1958022231020572}
   viewFinder: {fileID: 1898429910655944}
   viewFinderArrow: {fileID: 212527949012317372}
+--- !u!114 &114494720481330888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657952320254268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe64a5946ae63d4e9df0ea17218199a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewFinder: {fileID: 1898429910655944}
+  shootArrow: {fileID: 1730969683539076}
+  viewFinderArrow: {fileID: 212531647432257004}
 --- !u!114 &114540545172195490
 MonoBehaviour:
   m_ObjectHideFlags: 1

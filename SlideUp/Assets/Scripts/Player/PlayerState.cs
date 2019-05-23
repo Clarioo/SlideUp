@@ -9,6 +9,8 @@ public class PlayerState : MonoBehaviour {
 
     GameObject mainCamera;
     GameObject eventHandler;
+
+    [SerializeField] GameState gameState;
 	// Use this for initialization
 	void Start () {
 		
@@ -32,7 +34,7 @@ public class PlayerState : MonoBehaviour {
         GenerateTerrain generateTerrain = eventHandler.GetComponent<GenerateTerrain>();
 
         //Set Variables
-        camFollow.isGameStarted = false;
+        gameState.isGameStarted = false;
         //Save score and Collected Coins
         coinSystem.SaveCoins(collectingSystem.collectedCoins);
         switch (generateTerrain.gameMode)

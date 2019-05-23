@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MovementUIView : MonoBehaviour {
 
-    public GameObject viewFinder;
-    public GameObject shootArrow;
-    public SpriteRenderer viewFinderArrow;
+    [SerializeField] GameObject viewFinder;
+    [SerializeField] GameObject shootArrow;
+    [SerializeField] SpriteRenderer viewFinderArrow;
 	// Use this for initialization
 	void Start () {
 		
