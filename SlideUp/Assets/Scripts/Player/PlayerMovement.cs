@@ -73,10 +73,6 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    void SaveScoreOnCurrentMode()
-    {
-
-    }
    
     
     private void OnCollisionStay2D(Collision2D collision) 
@@ -102,11 +98,15 @@ public class PlayerMovement : MonoBehaviour {
         }
         if (collision.gameObject.CompareTag("Border"))
         {
-            BoxCollider2D boxCollider = collision.gameObject.GetComponent<BoxCollider2D>();
-            StartCoroutine(DecreaseMovementOnCollision(boxCollider.friction));
+            InitializingFriction(collision);
         }
     }
 
+    void InitializingFriction(Collision2D collision)
+    {
+        BoxCollider2D boxCollider = collision.gameObject.GetComponent<BoxCollider2D>();
+        StartCoroutine(DecreaseMovementOnCollision(boxCollider.friction));
+    }
 
 
     IEnumerator DecreaseMovementOnCollision(float friction)
