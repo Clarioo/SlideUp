@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CameraFollow : MonoBehaviour {
 	public Transform target;
 	Camera mycam;
-    PlayerMovement playerMovement;
+    PlayerState playerState;
     [SerializeField] private GameState gameState;
     // Use this for initialization
     void Start () {
@@ -23,9 +23,9 @@ public class CameraFollow : MonoBehaviour {
         if (target == null && gameState.isGameStarted) //Finding Player  
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
-            playerMovement = target.GetComponent<PlayerMovement>();
+            playerState = target.GetComponent<PlayerState>();
         }
-        if (target & playerMovement != null && playerMovement.isAlive && target.position.y > gameState.maxHeight) //Centre Camera on Player
+        if (target & playerState != null && playerState.isAlive && target.position.y > gameState.maxHeight) //Centre Camera on Player
         {
             transform.position = new Vector3(0, transform.position.y, transform.position.z);
             transform.position = Vector3.Lerp(transform.position, new Vector3(0, target.position.y - 2, 0), 0.1f) + new Vector3(0, 0.5f, -10f); // Second Vector is Camera offset

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovementUIController : MonoBehaviour {
 
 	[SerializeField]
-	private MovementUIView movementUIView;
+	public MovementUIView movementUIView;
 	// Use this for initialization
 	void Start () {
 		
@@ -23,4 +23,15 @@ public class MovementUIController : MonoBehaviour {
         movementUIView.DisplayCalculatedViewfinder(shootRange, angle);
 
 	}
+    public void SetAnimationBasedOnCollisionType(Collision2D colliderType, Animator anim)
+    {
+        BorderProperties borderProperties = colliderType.gameObject.GetComponent<BorderProperties>();
+        if (borderProperties.borderType.Equals("Right"))
+            anim.SetFloat("Border", 1f);
+        else if (borderProperties.borderType.Equals("Left"))
+            anim.SetFloat("Border", 0);
+        else if (borderProperties.borderType.Equals("Ground") | borderProperties.borderType.Equals("Ramp"))
+            anim.SetFloat("Border", 0.5f);
+    }
+
 }

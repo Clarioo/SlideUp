@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 114540545172195490}
   - component: {fileID: 114494720481330888}
   - component: {fileID: 114303034979848720}
+  - component: {fileID: 114538885894162152}
   m_Layer: 8
   m_Name: Character1
   m_TagString: Player
@@ -256,6 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlive: 0
   movementUIController: {fileID: 114303034979848720}
+  playerState: {fileID: 114538885894162152}
   sprRenderer: {fileID: 0}
   shootArrow: {fileID: 1958022231020572}
   viewFinder: {fileID: 1898429910655944}
@@ -272,8 +274,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewFinder: {fileID: 1898429910655944}
-  shootArrow: {fileID: 1730969683539076}
-  viewFinderArrow: {fileID: 212531647432257004}
+  shootArrow: {fileID: 1958022231020572}
+  viewFinderArrow: {fileID: 212527949012317372}
+--- !u!114 &114538885894162152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657952320254268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3eea3f0ef31c024996bdc73d083aa76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlive: 0
+  isGrounded: 0
+  gameState: {fileID: 0}
 --- !u!114 &114540545172195490
 MonoBehaviour:
   m_ObjectHideFlags: 1

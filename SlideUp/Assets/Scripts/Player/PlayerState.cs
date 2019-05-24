@@ -13,18 +13,18 @@ public class PlayerState : MonoBehaviour {
     [SerializeField] GameState gameState;
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        eventHandler = GameObject.FindGameObjectWithTag("EventHandler");
+        gameState = eventHandler.GetComponent<GameState>();
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
     public void Die()
     {
         //Finding objects
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        eventHandler = GameObject.FindGameObjectWithTag("EventHandler");
 
         //Get objects Components
         CameraFollow camFollow = mainCamera.GetComponent<CameraFollow>();
@@ -37,7 +37,7 @@ public class PlayerState : MonoBehaviour {
         gameState.isGameStarted = false;
         //Save score and Collected Coins
         coinSystem.SaveCoins(collectingSystem.collectedCoins);
-        switch (generateTerrain.gameMode)
+        switch (gameState.gameMode)
         {
             case "DeathRun":
                 gameUIControl.SaveDeathRunScore();

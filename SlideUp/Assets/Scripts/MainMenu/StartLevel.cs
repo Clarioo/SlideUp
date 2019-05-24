@@ -27,11 +27,11 @@ public class StartLevel : MonoBehaviour {
     {
         // Generating player
         GameObject player = GameObject.Instantiate(Resources.Load<GameObject>("GameObjects/Character" + currentCharacterID));
-        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+        PlayerState playerState = player.GetComponent<PlayerState>();
 
         // Setting Basic variables
-        playerMovement.isAlive = true;
-        gameState.isGameStarted = genTerrain.isGameStarted = true;
+        playerState.isAlive = true;
+        gameState.isGameStarted = true;
         gameState.maxHeight = 3;
         gameUIControl.scoreText.text = "0";
         gameUIControl.fireStartTime = Time.time;

@@ -16,6 +16,7 @@ public class GameUIController : MonoBehaviour {
     public GameObject player;
     public CameraFollow camFollow;
     public GenerateTerrain generateTerrain;
+    [SerializeField] GameState gameState;
     public StartLevel startLevel;
     public Text scoreText, timeText, topScore, timeTrialTopTime, timeTrialComplete;
     public Image newRecordImage;
@@ -35,11 +36,11 @@ public class GameUIController : MonoBehaviour {
         {
             if (player.transform.position.y > int.Parse(scoreText.text))
             {
-                if (generateTerrain.gameMode.Equals("DeathRun")) {
+                if (gameState.gameMode.Equals("DeathRun")) {
                     score = (int)player.transform.position.y;
                     scoreText.text = score.ToString();
                 }
-                else if (generateTerrain.gameMode.Equals("TimeTrial"))
+                else if (gameState.gameMode.Equals("TimeTrial"))
                 {
                 time = (int)(Time.time - fireStartTime);
                 timeText.text = time.ToString() + "s";

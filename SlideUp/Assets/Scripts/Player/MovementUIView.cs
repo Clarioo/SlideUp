@@ -22,4 +22,9 @@ public class MovementUIView : MonoBehaviour {
        viewFinder.transform.localScale = new Vector3(10, shootRange, 1);
        viewFinder.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
+    public void ResetViewFinder()
+    {
+        viewFinder.transform.rotation = Quaternion.identity;
+        viewFinderArrow.enabled = false;
+    }
 }

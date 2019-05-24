@@ -22,6 +22,7 @@ public class MainMenuUIControl : MonoBehaviour
     public StartLevel startLevelData;
     public CameraFollow camFollow;
     public GenerateTerrain generateTerrain;
+    [SerializeField] GameState gameState;
     // Use this for initialization
     void Start()
     {
@@ -90,7 +91,7 @@ public class MainMenuUIControl : MonoBehaviour
     }
     public void GamemodeEventer(string gamemodeType)
     {
-        generateTerrain.gameMode = gamemodeType;
+        gameState.gameMode = gamemodeType;
         gamemode = gamemodeType;
         switch (gamemodeType)
         {
@@ -130,7 +131,7 @@ public class MainMenuUIControl : MonoBehaviour
         {
             case "Start Game":
                 camFollow.transform.position = new Vector3(0, 10, -10);
-                generateTerrain.SetCurrentMap(animationType, 1);//switch 1 to var mapID
+                gameState.SetCurrentMap(animationType, 1);//TODO switch 1 to var mapID
                 break;
             case "Open Settings":
                 settingsPanel.gameObject.SetActive(true);

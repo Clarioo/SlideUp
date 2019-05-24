@@ -8,8 +8,6 @@ public class PlayerMovement : MonoBehaviour {
     Vector2 movementSpeed;
     float collisionReductor = 1;
     float resolutionScaler = 20;
-    public bool isAlive;
-    bool isGrounded;
     
     //Swipe Vectors
     Vector2 moveVector;
@@ -26,10 +24,7 @@ public class PlayerMovement : MonoBehaviour {
     GameObject mainCamera;
     GameObject eventHandler;
 
-    //UI
-    public GameObject shootArrow;
-    public GameObject viewFinder;
-    public SpriteRenderer viewFinderArrow;
+    
 	// Use this for initialization
 	void Start () {
         rigidbodyMove = GetComponent<Rigidbody2D>();
@@ -44,9 +39,9 @@ public class PlayerMovement : MonoBehaviour {
 	}
     void Jump()
     {
-        if (isAlive)
+        if (playerState.isAlive)
         {
-            if (Input.touchCount != 0 & isGrounded == true)
+            if (Input.touchCount != 0 & playerState.isGrounded == true)
             {
 
                 Touch moveTouch = Input.GetTouch(0); 
@@ -60,14 +55,12 @@ public class PlayerMovement : MonoBehaviour {
                 if (moveTouch.phase == TouchPhase.Ended)
                 {
                     endPoint = moveTouch.position;
-                    movementSpeed = (startPoint - endPoint) / Screen.height * 40f;// speed = swipe vector/resolution*constance_multiplier
-                    Debug.Log(movementSpeed.magnitude);
+                    movementSpeed = (startPoint - endPoint) / Screen.height * 2*resolutionScaler;// speed = swipe vector/resolution*constance_multiplier
                     if (movementSpeed.magnitude > resolutionScaler)
                         rigidbodyMove.velocity = movementSpeed * (resolutionScaler/movementSpeed.magnitude);
                     else
                         rigidbodyMove.velocity = movementSpeed;
-                    viewFinder.transform.rotation = Quaternion.identity;
-                    viewFinderArrow.enabled = false;
+                    movementUIController.movementUIView.ResetViewFinder();
                 }
                 
             }
@@ -88,20 +81,13 @@ public class PlayerMovement : MonoBehaviour {
     
     private void OnCollisionStay2D(Collision2D collision) 
     {
-        isGrounded = true;
+        playerState.isGrounded = true;
         anim.SetBool("IsColliding", true);
-        BorderProperties borderProperties = collision.gameObject.GetComponent<BorderProperties>();
-        //setting animation for each type of obstacle
-        if (borderProperties.borderType.Equals("Right"))
-            anim.SetFloat("Border", 1f);
-        else if (borderProperties.borderType.Equals("Left"))
-            anim.SetFloat("Border", 0);
-        else if (borderProperties.borderType.Equals("Ground") | borderProperties.borderType.Equals("Ramp"))
-            anim.SetFloat("Border", 0.5f);
+        movementUIController.SetAnimationBasedOnCollisionType(collision, anim);
     }
     private void OnCollisionExit2D(Collision2D collision) //cancelling collider animation
     {
-        isGrounded = false;
+        playerState.isGrounded = false;
         anim.SetBool("IsColliding", false);
     }
     private void OnCollisionEnter2D(Collision2D collision) //Triggering death
@@ -120,6 +106,9 @@ public class PlayerMovement : MonoBehaviour {
             StartCoroutine(DecreaseMovementOnCollision(boxCollider.friction));
         }
     }
+
+
+
     IEnumerator DecreaseMovementOnCollision(float friction)
     {
         rigidbodyMove.gravityScale = 5.1f - 4*friction;

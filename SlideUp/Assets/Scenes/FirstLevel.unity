@@ -9060,17 +9060,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generationStartPosY: 56
   generateID: 0
-  isGameStarted: 0
-  gameMode: DeathRun
-  currentMapLocation: {fileID: 471372701}
-  currentMap: {fileID: 0}
   leftBorder: {fileID: 1218658160736204, guid: 5a0ecd2ae79baaa4587672a89e2b15a3, type: 2}
   rightBorder: {fileID: 1829400951750710, guid: 0013fac8232f20b48a65b25a1342c3b0,
     type: 2}
   ramp: {fileID: 1731810214333530, guid: fe06fac1d9f078040af05e76b246244e, type: 2}
   stickwheel: {fileID: 1607164999612230, guid: f0b819fc3377412429b8812382b24679, type: 2}
-  spikes: {fileID: 1390404080405248, guid: e5b5317eafbad1647b92c8e8eb13f567, type: 2}
+  spikes: {fileID: 0}
   coin: {fileID: 1223653411}
+  gameState: {fileID: 1830426518}
 --- !u!114 &1830426514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9104,6 +9101,7 @@ MonoBehaviour:
   player: {fileID: 0}
   camFollow: {fileID: 0}
   generateTerrain: {fileID: 1830426513}
+  gameState: {fileID: 1830426518}
   startLevel: {fileID: 0}
   scoreText: {fileID: 841737717}
   timeText: {fileID: 465253832}
@@ -9142,6 +9140,7 @@ MonoBehaviour:
   startLevelData: {fileID: 1830426514}
   camFollow: {fileID: 519420030}
   generateTerrain: {fileID: 1830426513}
+  gameState: {fileID: 1830426518}
 --- !u!114 &1830426517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9167,6 +9166,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGameStarted: 0
   maxHeight: 0
+  gameMode: DeathRun
+  currentMapLocation: {fileID: 471372701}
+  currentMap: {fileID: 0}
+  generateTerrain: {fileID: 1830426513}
 --- !u!1 &1859840534
 GameObject:
   m_ObjectHideFlags: 0
